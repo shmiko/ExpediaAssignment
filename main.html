@@ -1,0 +1,166 @@
+﻿<html ng-app="Deals">
+<head>
+    <title>Expedia Hotel Deals</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="main.js" type="text/javascript"></script>
+</head>
+<body ng-controller="hotelDealsCntrl">
+	<div class="container">
+		<nav class="navbar navbar-default customNav navHeight " role="navigation">
+				<div class="navbar-header col-xs-12 col-sm-12 col-md-12">
+				  <a class="navbar-brand" href="www.expedia.com">
+					<img alt="Brand" src="exp-logo.svg" style="width:120px;">
+				  </a>
+				</div>
+			  <div class="secondary-navigation hidden-xs">
+				<ul class="nav navbar-nav nav-pills">
+					<li><a class="active option" href="www.expedia.com"> Home </a> </li>
+					<li><a href="#"> Vacation Packages </a> </li>
+					<li><a href="#"> Hotels </a> </li>
+					<li><a href="#"> Cars </a> </li>
+					<li><a href="#"> Flights </a> </li>
+					<li><a href="#"> Cruises </a> </li>
+					<li><a href="#"> Things to Do </a> </li>
+					<li><a href="#"> Deals </a> </li>
+					<li><a href="#"> Rewards </a> </li>
+					<li><a href="#"> Mobile </a> </li>
+				</ul>
+			  </div> 
+		</nav>
+	<div class="col-sm-3"> 
+				<div class="row">
+				    <div class="col-xs-12 col-sm-12 col-md-12">
+						<div class="input-group marginTopForSearch">
+							<input type="text" class="form-control" ng-model="searchText" placeholder="Search...">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" >Go!</button>
+							</span>
+						</div>
+					<div class="filter">
+						<p class="filterName">Price Range<i ng-click="resetPriceRange()" class="pull-right fa fa-refresh"></i></p>
+						<div class="fontSize">(per night)</div>
+						<div class="filterOption ">
+							<ul class="list-unstyled">
+								<li ng-repeat="priceRange in priceRanges" class="optionNames">
+									<label class="active">
+										<input type="radio" class="pointerClass" name="priceRange" value="{{priceRange}}" ng-model="searchPriceRange.priceRange">
+										<span class="optionName">{{priceRange["range"]}}</span>
+									</label>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="filter">
+						<p class="filterName">Hotel Star Range<i ng-click="resetHotelStarRange()" class="pull-right fa fa-refresh"></i></p>
+						<div class="filterOption ">
+							<ul class="list-unstyled">
+								<li ng-repeat="starRange in hotelStarRanges" class="optionNames">
+									<label class="active">
+										<input type="radio" class="pointerClass" name="starRange" value="{{starRange}}" ng-model="searchHotelStarRange.hotelStarRange">
+										<span class="optionName">{{starRange["range"]}}</span>
+									</label>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+
+				    </div>
+				</div>
+				<br />
+</div>
+<div class="col-sm-9">
+				<div class="row hidden-xs" scroll-bookmark="topFilter">
+					<div class="col-xs-12 col-sm-12 col-md-12">
+						<ul class="nav nav-pills sortByDiv">
+						  <li role="presentation" class="disabled">
+								<a href="#">Sort By:</a>
+						  </li>
+						  <li class="option" role="presentation">
+								<a href="#" ng-click="orderByField='pricePerNight'; reverseSort = !reverseSort">
+								 	 Price <span ng-show="orderByField == 'pricePerNight'">
+							  	</a>
+						  </li>
+						  <li class="option" role="presentation">
+								<a href="#" ng-click="orderByField='starRating'; reverseSort = !reverseSort">
+								 	 Star Rating <span ng-show="orderByField == 'starRating'">
+							  	</a>
+						  </li>
+						  <li class="option" role="presentation">
+								<a href="#" ng-click="orderByField='name'; reverseSort = !reverseSort">
+								 	 Hotel Name <span ng-show="orderByField == 'name'">
+							  	</a>
+							</li>
+						  <li class="option" role="presentation">
+								<a href="#" ng-click="orderByField='guestRating'; reverseSort = !reverseSort">
+								 	 Guest Rating <span ng-show="orderByField == 'guestRating'">
+							  	</a>
+						  </li>
+						  <li class="option" role="presentation">
+								<a href="#" ng-click="orderByField=''; reverseSort = !reverseSort">
+								 	 Most Popular <span ng-show="orderByField == ''">
+							  	</a>
+						  </li>
+						</ul>
+					</div>
+				</div>
+                <br />
+				<div class="row col-md-12">
+					<div class="dealsWrapper" ng-repeat="deal in deals.data | filter:searchText | orderBy:orderByField:reverseSort | priceRangeFilter:searchPriceRange.priceRange | hotelStarRangeFilter:searchHotelStarRange.hotelStarRange">
+					  <div class="col-md-2 col-xs-2 col-sm-2 hidden-xs">
+							<!--<div class="thumbnailContainer">
+								<div class="thumbnail"> 
+								</div>
+							</div>-->
+		               		<a href={{deal.dealDeepLink}} target="_blank">				
+									<img src={{deal.imageUrl}} class="img-responsive" style="width:100%;">
+							</a>
+					  </div>
+					  <div class="col-md-8 col-xs-7 col-sm-8">
+							<a href={{deal.dealDeepLink}} target="_blank"><div class="hotelName">{{deal.name}}</div></a>
+							<div class="starRating">{{deal.starRating}} Star Hotel</div>
+
+							<div class="hotelAddress">{{deal.city}}</div>
+							<a href="" ng-model="show" ng-click="show=!show">
+								<img src="map_pin.png" class="img-responsive mapImage">
+								<span  ng-click="initializeMap({{deal.latitude}}, {{deal.longitude}}, $index)" > Map </span>
+							</a>
+							<div class="description hidden-xs">{{deal.description}}</div>
+							<a href={{deal.similarDeepLink}} target="_blank" > <div >Show similar deals!</div> </a>
+							<div id="map-canvas{{$index}}" ng-show="show" class="col-md-6 col-xs-12 col-sm-6 map-canvas"></div>
+					  </div>
+					  <div class="col-md-2 col-xs-5 col-sm-2">
+							<div class="customerRating" style="{{deal.guestRating == 0 ? 'display:none' : ''}}">
+								<span>Guest Rating: </span>{{deal.guestRating}}/5
+							</div>
+							<span class="textDecoration" style="{{deal.percentSavings == 0 ? 'display:none' : ''}}">{{deal.originalPricePerNight | currency}}</span>
+							<div class="dealPrice">{{deal.pricePerNight | currency}}</div>
+							<div >avg/night</div>
+							<span class="sales" style="{{deal.percentSavings == 0 ? 'display:none' : ''}}">Save {{deal.percentSavings}}% !!</span>
+							<a href={{deal.dealDeepLink}} target="_blank" > <div class="bookNow">Book Now!</div> </a>
+					  </div>
+					  <div style="clear:both;"></div>
+					</div>
+				</div>
+			</div>
+         </div>
+		<footer class="hidden-xs footerStyle">
+			<div class="container ">
+				<div class="row">
+					<div class="col-sm-4">
+						<h6>Copyright &copy 2014 Keshav Guleria</h6>
+					</div>
+					<div class="col-sm-2">
+						<h6>Coded with <span class="glyphicon glyphicon-heart"></span> by Keshav</h6>
+					</div>
+				</div>
+			</div>
+		</footer>
+</body>
+</html>

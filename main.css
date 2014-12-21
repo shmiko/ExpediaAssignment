@@ -1,0 +1,120 @@
+@media screen and (max-width: 700px) {
+  .dealPrice {
+	font-size:18px !important;
+  }
+}
+
+.fontSize {
+	font-size:14;
+	margin-top:-20px;
+	margin-bottom:10px;
+}
+.itemRating{
+	color: #333;
+	text-decoration: none;
+}
+
+.map-canvas {
+    height: 200px;
+    background-color: #CCC;
+}
+
+.mapImage {
+	width:20px; 
+	display:inline-block !important;	
+}
+.dealsWrapper {
+	margin-bottom:20px;
+	padding-top:20px;
+	padding-bottom:20px;
+	border:1px solid #eee;
+}
+
+.dealsWrapper:hover {
+	background-color:#eee;
+	cursor:pointer;
+}
+
+.marginTopForSearch { 
+	margin-top:5px;
+}
+.filter {
+	margin-top:53px;
+	color:#777;
+}
+
+.pointerClass {
+	cursor:pointer;
+}
+
+.hotelName, .filterName  {
+	font-size:20px;
+}
+
+.customerRating {
+	font-size:1em;
+}
+
+.hotelAddress {
+	display: inline-block;
+	margin-right:10px;
+}
+
+.description {
+	font-size:1em;
+}
+
+.customerRating {
+	color: #428BCA;
+}
+
+.dealPrice{
+	font-size:30px;
+}
+
+.bookNow{
+	font-size:18px;
+	font-weight:bold;
+}
+
+.sortByDiv, .customNav {
+	border:none !important;
+	border-top:3px solid #ffcb00 !important;
+	vertical-align:top !important;
+	margin-bottom:0;
+	background-color:white !important;
+	border-bottom:2px solid #999999 !important;
+	border-radius:0.23529412em;
+}
+
+.navHeight {
+	height:110px;
+}
+
+.option:hover {
+	background-color:#d1eaff;
+	color:#0065b8;
+	text-decoration:none;
+}
+
+.sales {
+	color:red;
+}
+
+.textDecoration {
+	text-decoration: line-through;
+	font-size:15px;
+	color:grey;
+}
+
+.filterOption {
+	font-weight:lighter !important;
+}
+
+.removeDecoration { 
+	text-decoration:none;
+}
+
+.footerStyle {
+	margin-bottom:20px;
+}
